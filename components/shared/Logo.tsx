@@ -21,10 +21,10 @@ export function Logo({ compact = false, onNavigate }: { compact?: boolean; onNav
         className={`${compact ? "size-10" : "size-12"} drop-shadow-[0_6px_10px_rgba(40,76,67,0.15)] transition-transform duration-500 group-hover:rotate-[24deg]`}
       />
       <span className={`flex flex-col leading-none ${compact ? "max-[349px]:hidden" : ""}`}>
-        <span className={`${compact ? "text-xl" : "text-2xl"} font-black tracking-tight text-forest`}>
+        <span className={`${compact ? "text-[19px]" : "text-[22px]"} font-display font-extrabold tracking-tight text-forest`}>
           {t.brand.name}
         </span>
-        <span className="mt-1 text-[11px] font-bold tracking-wide text-forest-muted">{t.brand.tagline}</span>
+        <span className="mt-1 text-[11px] font-medium tracking-wide text-forest-muted">{t.brand.tagline}</span>
       </span>
     </a>
   );

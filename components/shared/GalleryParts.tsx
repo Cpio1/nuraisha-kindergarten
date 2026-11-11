@@ -59,7 +59,7 @@ export function GalleryEmpty({ count, tileClass }: { count: number; tileClass: (
     <>
       {Array.from({ length: count }).map((_, i) => (
         <div key={i} aria-hidden="true" className={`overflow-hidden ${tileClass(i)}`}>
-          <PhotoPlaceholder tone={placeholderTones[i % placeholderTones.length]} small />
+          <PhotoPlaceholder tone={placeholderTones[i % placeholderTones.length]} />
         </div>
       ))}
     </>
@@ -70,8 +70,8 @@ export function GalleryEmptyNote({ className = "" }: { className?: string }) {
   const { t } = useLang();
   return (
     <div className={`flex flex-col items-center gap-4 text-center ${className}`}>
-      <p className="text-lg font-black">{t.gallery.placeholder}</p>
-      <p className="max-w-sm text-[15px] font-semibold text-forest-soft">{t.gallery.placeholderHint}</p>
+      <p className="font-display text-lg font-extrabold">{t.gallery.placeholder}</p>
+      <p className="max-w-sm text-[15px] text-forest-soft">{t.gallery.placeholderHint}</p>
       <a href={site.instagram.url} target="_blank" rel="noopener noreferrer" className="btn-soft">
         <InstagramIcon className="size-5" />@{site.instagram.handle}
       </a>

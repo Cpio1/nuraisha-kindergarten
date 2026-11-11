@@ -1,11 +1,20 @@
 import type { Metadata, Viewport } from "next";
-import { Nunito } from "next/font/google";
+import { M_PLUS_Rounded_1c, Onest } from "next/font/google";
 import { site } from "@/lib/site";
 import "./globals.css";
 
-const nunito = Nunito({
+/** Заголовки: мягкий округлый гротеск с полной поддержкой казахских букв. */
+const display = M_PLUS_Rounded_1c({
+  weight: ["500", "700", "800"],
   subsets: ["latin", "cyrillic", "cyrillic-ext"],
-  variable: "--font-nunito",
+  variable: "--font-display-src",
+  display: "swap",
+});
+
+/** Основной текст: чистый современный sans (ә ғ қ ң ө ұ ү һ і). */
+const body = Onest({
+  subsets: ["latin", "cyrillic", "cyrillic-ext"],
+  variable: "--font-body-src",
   display: "swap",
 });
 
@@ -74,7 +83,7 @@ const jsonLd = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="kk" className={nunito.variable} style={{ colorScheme: "light" }}>
+    <html lang="kk" className={`${display.variable} ${body.variable}`} style={{ colorScheme: "light" }}>
       <head>
         <meta name="color-scheme" content="light only" />
         <meta name="supported-color-schemes" content="light" />

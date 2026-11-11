@@ -4,7 +4,8 @@
 @custom-variant dark (&:where(.__never-dark, .__never-dark *));
 
 @theme {
-  --font-sans: var(--font-nunito), ui-rounded, system-ui, sans-serif;
+  --font-sans: var(--font-body-src), system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: var(--font-display-src), ui-rounded, var(--font-body-src), system-ui, sans-serif;
 
   --color-mint: #b8e5d0;
   --color-mint-soft: #e6f6ee;
@@ -26,10 +27,6 @@
   --shadow-lift: 0 22px 50px -20px rgb(40 76 67 / 0.28);
   --shadow-inner-glow: inset 0 1px 0 rgb(255 255 255 / 0.7);
 
-  --radius-blob-a: 58% 42% 55% 45% / 48% 56% 44% 52%;
-  --radius-blob-b: 42% 58% 46% 54% / 55% 42% 58% 45%;
-
-  --animate-spin-slow: spin 28s linear infinite;
 }
 
 :root {
@@ -92,7 +89,9 @@ section[id] {
 h1,
 h2,
 h3 {
+  font-family: var(--font-display);
   text-wrap: balance;
+  letter-spacing: -0.01em;
 }
 
 p {
@@ -100,46 +99,36 @@ p {
 }
 
 @utility eyebrow {
-  @apply inline-flex items-center gap-2 rounded-full bg-white/75 px-4 py-1.5 text-[13px] font-extrabold tracking-wide text-forest-soft uppercase ring-1 ring-forest/10 backdrop-blur;
+  @apply inline-flex items-center gap-2 rounded-full bg-white px-3.5 py-1.5 text-[12.5px] font-semibold tracking-[0.08em] text-forest-soft uppercase shadow-[0_1px_0_rgb(40_76_67/0.08),0_6px_16px_-10px_rgb(40_76_67/0.35)] ring-1 ring-forest/8;
 }
 
 @utility btn {
-  @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 text-base font-extrabold transition-[translate,box-shadow,background-color,scale] duration-300 select-none active:scale-[0.97];
+  @apply inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-6 font-display text-[15px] font-bold tracking-[0.01em] transition-[translate,box-shadow,background-color,scale] duration-300 select-none active:scale-[0.97];
 }
 
 @utility btn-primary {
-  @apply btn bg-forest text-cream shadow-lift hover:-translate-y-0.5 hover:bg-[#1f3d36];
+  @apply btn bg-forest text-cream shadow-[0_4px_0_#1a352e,0_14px_28px_-14px_rgb(40_76_67/0.6)] hover:-translate-y-0.5 hover:bg-[#2f574d] active:translate-y-0.5 active:shadow-[0_1px_0_#1a352e];
 }
 
 @utility btn-soft {
-  @apply btn bg-white text-forest shadow-soft ring-1 ring-forest/10 hover:-translate-y-0.5 hover:shadow-lift;
+  @apply btn bg-white text-forest shadow-[0_4px_0_rgb(40_76_67/0.14),0_14px_28px_-16px_rgb(40_76_67/0.35)] ring-1 ring-forest/10 hover:-translate-y-0.5 active:translate-y-0.5;
 }
 
-@utility blob-a {
-  border-radius: var(--radius-blob-a);
+/* Заголовки секций: размер зависит и от ширины, и от высоты экрана */
+@utility title-xl {
+  font-family: var(--font-display);
+  font-weight: 800;
+  line-height: 1.08;
+  font-size: clamp(1.85rem, 1.1rem + 2.1vw, 3rem);
 }
 
-@utility blob-b {
-  border-radius: var(--radius-blob-b);
+@utility lead {
+  @apply text-[16px] leading-[1.65] text-forest-soft lg:text-[17px];
 }
 
 @utility dots-bg {
   background-image: radial-gradient(rgb(40 76 67 / 0.12) 1.5px, transparent 1.5px);
   background-size: 22px 22px;
-}
-
-@keyframes morph {
-  0%,
-  100% {
-    border-radius: 58% 42% 55% 45% / 48% 56% 44% 52%;
-  }
-  50% {
-    border-radius: 44% 56% 42% 58% / 58% 44% 56% 42%;
-  }
-}
-
-.animate-morph {
-  animation: morph 14s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -44,25 +44,25 @@ export function MapCard({ className = "" }: { className?: string }) {
 
       <div className="absolute top-[38%] left-1/2 -translate-x-1/2 -translate-y-full">
         <span className="absolute top-full left-1/2 h-3 w-10 -translate-x-1/2 rounded-full bg-forest/15 blur-[2px]" />
-        <span className="relative grid size-14 place-items-center rounded-[50%_50%_50%_6px] bg-forest text-cream shadow-lift [transform:rotate(-45deg)]">
+        <span className="relative grid size-14 place-items-center rounded-[50%_50%_50%_6px] bg-forest text-cream shadow-lift [transform:rotate(-45deg)] ring-4 ring-white">
           <MapPin className="size-6 [transform:rotate(45deg)]" />
         </span>
       </div>
 
       <div className="absolute inset-x-4 bottom-4 rounded-3xl bg-white/92 p-4 shadow-soft backdrop-blur sm:inset-x-6 sm:bottom-6 sm:p-5">
-        <p className="text-[15px] font-black">{c.addressShort}</p>
+        <p className="font-display text-[15px] font-bold">{c.addressShort}</p>
         {site.twoGisUrl ? (
           <a
             href={site.twoGisUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-2 inline-flex min-h-11 items-center gap-2 text-[15px] font-extrabold text-mint-deep"
+            className="mt-2 inline-flex min-h-11 items-center gap-2 text-[15px] font-semibold text-forest underline decoration-mint-deep decoration-2 underline-offset-4"
           >
             {c.mapOpen}
             <ExternalLink className="size-4" />
           </a>
         ) : (
-          <p className="mt-1 text-sm font-semibold text-forest-muted">{c.mapSoon}</p>
+          <p className="mt-1 text-sm text-forest-muted">{c.mapSoon}</p>
         )}
       </div>
     </div>

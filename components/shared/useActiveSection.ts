@@ -11,6 +11,8 @@ export function useActiveSection() {
     let frame = 0;
     const update = () => {
       frame = 0;
+      // пока открыто меню/лайтбокс, страница «заморожена» — не пересчитываем
+      if (document.body.style.position === "fixed") return;
       const line = window.innerHeight * 0.35;
       let current: NavId = "home";
       for (const id of navIds) {

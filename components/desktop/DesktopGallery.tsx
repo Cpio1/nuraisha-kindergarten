@@ -1,7 +1,7 @@
 "use client";
 
 import type { GalleryImage } from "@/lib/gallery";
-import { Float, FlowerShape, SparkleShape, StarShape } from "../shared/Decor";
+import { C, Confetti, Drop, Flower, Float, Sparkle, Star } from "../shared/Shapes";
 import { GalleryEmpty, GalleryEmptyNote, GalleryTile, MoreButton } from "../shared/GalleryParts";
 import { useLang } from "../shared/LanguageProvider";
 import { Lightbox } from "../shared/Lightbox";
@@ -45,23 +45,29 @@ export function DesktopGallery({ images }: { images: GalleryImage[] }) {
   const empty = images.length === 0;
 
   return (
-    <div className="relative overflow-hidden bg-cream pt-14 pb-32 xl:pt-16 xl:pb-40">
-      <Float className="absolute top-28 left-[8%] w-10" delay={0.3}>
-        <StarShape color="#DCCDF7" />
+    <div className="relative overflow-hidden bg-cream pt-[clamp(40px,6vw,80px)] pb-[clamp(96px,10vw,150px)]">
+      <Float className="absolute top-24 left-[6%] hidden w-10 xl:block" delay={0.3}>
+        <Star fill={C.lilac} />
       </Float>
-      <Float className="absolute top-40 right-[9%] w-12" delay={1}>
-        <FlowerShape color="#FFD6B8" />
+      <Float className="absolute top-32 right-[7%] hidden w-12 xl:block" delay={1}>
+        <Flower petals={8} fill={C.peach} />
       </Float>
-      <Float className="absolute bottom-48 left-[3%] w-6" delay={1.6} duration={4}>
-        <SparkleShape color="#6FC29D" />
+      <Float className="absolute bottom-40 left-[2.5%] hidden w-8 xl:block" delay={1.6} duration={6}>
+        <Drop fill={C.mint} />
+      </Float>
+      <Float className="absolute right-[3%] bottom-48 hidden w-5 xl:block" delay={0.4} duration={4}>
+        <Sparkle fill={C.mintDeep} />
       </Float>
 
-      <div className="relative mx-auto max-w-[1240px] px-6 xl:px-10">
+      <div className="relative mx-auto max-w-[1200px] px-8 xl:px-12">
         <Reveal>
-          <SectionHeading eyebrow={t.gallery.eyebrow} title={t.gallery.title} lead={t.gallery.lead} squiggle="#F39A62" />
+          <div className="relative">
+            <SectionHeading eyebrow={t.gallery.eyebrow} title={t.gallery.title} lead={t.gallery.lead} accent={C.peachDeep} petal={C.peach} />
+            <Confetti className="absolute top-2 left-[calc(50%+160px)] hidden w-24 lg:block" />
+          </div>
         </Reveal>
 
-        <div className="mt-14 grid auto-rows-[clamp(150px,14vw,210px)] grid-cols-4 gap-4 xl:gap-5 [grid-auto-flow:dense]">
+        <div className="mt-12 grid auto-rows-[clamp(140px,13vw,200px)] grid-cols-4 gap-4 xl:gap-5 [grid-auto-flow:dense]">
           {empty ? (
             <GalleryEmpty count={INITIAL} tileClass={(i) => pattern[i % pattern.length]} />
           ) : (
@@ -87,7 +93,7 @@ export function DesktopGallery({ images }: { images: GalleryImage[] }) {
         ) : (
           (g.hasMore || g.canCollapse) && (
             <div className="mt-12 flex justify-center">
-              <MoreButton hasMore={g.hasMore} onClick={g.toggle} className="h-14 px-8 text-[17px]" />
+              <MoreButton hasMore={g.hasMore} onClick={g.toggle} className="h-[52px] px-8 text-base" />
             </div>
           )
         )}

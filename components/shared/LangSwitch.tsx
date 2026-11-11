@@ -29,7 +29,7 @@ export function LangSwitch({ size = "md", layoutId }: { size?: "md" | "lg"; layo
             onClick={() => setLang(o.id)}
             aria-pressed={active}
             lang={o.id}
-            className={`relative ${w} h-full rounded-full text-sm font-extrabold transition-colors ${
+            className={`relative ${w} h-full rounded-full font-display text-sm font-bold transition-colors ${
               active ? "text-cream" : "text-forest-soft hover:text-forest"
             }`}
           >

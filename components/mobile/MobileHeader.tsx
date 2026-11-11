@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { navIds, site, type NavId } from "@/lib/site";
 import { InstagramIcon } from "../shared/BrandIcons";
 import { tones, type Tone } from "../shared/content";
-import { CloudShape, FlowerShape, StarShape } from "../shared/Decor";
+import { C, Cloud, Flower, Shape, Star } from "../shared/Shapes";
 import { LangSwitch } from "../shared/LangSwitch";
 import { useLang } from "../shared/LanguageProvider";
 import { Logo } from "../shared/Logo";
@@ -15,6 +15,7 @@ import { useScrollLock } from "../shared/useScrollLock";
 import { useScrollTo } from "../shared/useScrollTo";
 
 const navTones: Tone[] = ["mint", "lilac", "peach", "mint", "lilac", "peach"];
+const navShapes = ["blob1", "flower6", "blob3", "star4", "pebble", "flower8"] as const;
 
 export function MobileHeader() {
   const { t } = useLang();
@@ -97,9 +98,9 @@ export function MobileHeader() {
             <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
               <div className="absolute -top-24 -right-24 size-72 rounded-full bg-mint/50 blur-2xl" />
               <div className="absolute -bottom-24 -left-24 size-72 rounded-full bg-lilac/50 blur-2xl" />
-              <CloudShape className="absolute top-6 right-6 w-20" />
-              <StarShape className="absolute right-10 bottom-40 w-8" />
-              <FlowerShape className="absolute bottom-56 left-6 w-9" color="#DCCDF7" />
+              <Cloud className="absolute top-6 right-6 w-20" />
+              <Star className="absolute right-8 bottom-36 w-8" />
+              <Flower petals={8} fill={C.lilac} className="absolute bottom-52 left-5 w-9" />
             </div>
 
             <nav className="relative px-4 pt-4 pb-[max(env(safe-area-inset-bottom),24px)] sm:px-6">
@@ -117,16 +118,20 @@ export function MobileHeader() {
                         href={`#${id}`}
                         onClick={(e) => go(id, e)}
                         aria-current={isActive ? "true" : undefined}
-                        className={`flex min-h-[60px] items-center gap-4 rounded-[22px] px-4 text-[19px] font-extrabold transition ${
+                        className={`flex min-h-[60px] items-center gap-4 rounded-[22px] px-4 text-[18px] font-bold transition ${
                           isActive ? "bg-white shadow-soft" : "active:bg-white/70"
                         }`}
                       >
-                        <span
-                          className={`grid size-9 shrink-0 place-items-center blob-a text-sm font-black ${tones[navTones[i]].bg}`}
-                        >
-                          {i + 1}
+                        <span className="relative grid size-10 shrink-0 place-items-center">
+                          <Shape
+                            name={navShapes[i]}
+                            fill={tones[navTones[i]].hex}
+                            outline={false}
+                            className="absolute inset-0 size-full"
+                          />
+                          <span className="relative font-display text-sm font-extrabold">{i + 1}</span>
                         </span>
-                        <span className="flex-1">{t.nav[id]}</span>
+                        <span className="flex-1 font-display">{t.nav[id]}</span>
                         <ArrowRight className={`size-5 ${isActive ? "text-forest" : "text-forest-muted"}`} />
                       </a>
                     </motion.li>
@@ -140,7 +145,7 @@ export function MobileHeader() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.3 }}
               >
-                <p className="flex items-center gap-2.5 rounded-[22px] bg-lilac-soft px-4 py-3.5 text-[15px] font-bold">
+                <p className="flex items-center gap-2.5 rounded-[22px] bg-lilac-soft px-4 py-3.5 text-[15px] font-medium">
                   <Clock3 className="size-5 shrink-0 text-lilac-deep" />
                   {t.contact.hours}
                 </p>
@@ -148,7 +153,7 @@ export function MobileHeader() {
                   href={site.instagram.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="btn-primary h-14 w-full text-[17px]"
+                  className="btn-primary h-14 w-full text-base"
                 >
                   <InstagramIcon className="size-5" />@{site.instagram.handle}
                 </a>

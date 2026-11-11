@@ -19,11 +19,11 @@ export function Footer() {
             <div className="flex items-center gap-3">
               <LogoMark className="size-12" />
               <span className="flex flex-col leading-none">
-                <span className="text-2xl font-black">{t.brand.name}</span>
-                <span className="mt-1 text-xs font-bold text-mint">{t.brand.tagline}</span>
+                <span className="font-display text-2xl font-extrabold">{t.brand.name}</span>
+                <span className="mt-1 text-xs font-medium text-mint">{t.brand.tagline}</span>
               </span>
             </div>
-            <p className="mt-4 text-[15px] leading-relaxed font-semibold text-cream/75">{t.hero.subtitle}</p>
+            <p className="mt-4 text-[15px] leading-relaxed text-cream/75">{t.hero.subtitle}</p>
           </div>
 
           <nav aria-label={t.header.menu} className="lg:max-w-md">
@@ -33,7 +33,7 @@ export function Footer() {
                   <a
                     href={`#${id}`}
                     onClick={(e) => scrollTo(id, e)}
-                    className="flex min-h-11 items-center text-[15px] font-bold text-cream/80 transition hover:text-mint"
+                    className="flex min-h-11 items-center text-[15px] font-medium text-cream/80 transition hover:text-mint"
                   >
                     {t.nav[id]}
                   </a>
@@ -42,7 +42,7 @@ export function Footer() {
             </ul>
           </nav>
 
-          <ul className="space-y-3 text-[15px] font-semibold text-cream/80 lg:max-w-xs">
+          <ul className="space-y-3 text-[15px] text-cream/80 lg:max-w-xs">
             <li className="flex gap-3">
               <MapPin className="mt-0.5 size-5 shrink-0 text-mint" />
               {t.contact.address}
@@ -65,13 +65,13 @@ export function Footer() {
         </div>
 
         <div className="mt-10 flex flex-col-reverse gap-4 border-t border-cream/15 pt-6 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm font-semibold text-cream/60">
+          <p className="text-sm text-cream/60">
             © {year} {t.brand.full}. {t.footer.rights}
           </p>
           <a
             href="#home"
             onClick={(e) => scrollTo("home", e)}
-            className="inline-flex min-h-11 w-fit items-center gap-2 rounded-full bg-cream/10 px-5 text-sm font-extrabold transition hover:bg-cream/20"
+            className="inline-flex min-h-11 w-fit items-center gap-2 rounded-full bg-cream/10 px-5 font-display text-sm font-bold transition hover:bg-cream/20"
           >
             <ArrowUp className="size-4" />
             {t.footer.up}

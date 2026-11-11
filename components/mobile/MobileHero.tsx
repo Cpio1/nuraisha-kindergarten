@@ -1,11 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowRight, Baby, Clock3, Languages, Sparkles, Users } from "lucide-react";
+import { ArrowRight, Baby, Clock3, Languages, Users } from "lucide-react";
 import type { GalleryImage } from "@/lib/gallery";
-import { CloudShape, Float, FlowerShape, HeartShape, SparkleShape, StarShape, SunShape } from "../shared/Decor";
 import { useLang } from "../shared/LanguageProvider";
-import { SitePhoto } from "../shared/SitePhoto";
+import { Quoted } from "../shared/Quoted";
+import { C, Cloud, Flower, Float, Heart, Shape, Sparkle, Star, Sun } from "../shared/Shapes";
+import { ShapedPhoto } from "../shared/SitePhoto";
 import { Wave } from "../shared/Wave";
 import { useScrollTo } from "../shared/useScrollTo";
 
@@ -16,150 +17,139 @@ export function MobileHero({ main, second }: { main: GalleryImage | null; second
   const scrollTo = useScrollTo();
   const h = t.hero;
 
+  const facts = [
+    { Icon: Baby, value: h.ageValue, label: h.ageLabel, fill: C.mint, shape: "blob1" as const },
+    { Icon: Clock3, value: h.hoursValue, label: h.hoursLabel, fill: C.lilac, shape: "blob3" as const },
+    { Icon: Users, value: h.groupsValue, label: h.groupsLabel, fill: C.peach, shape: "blob2" as const },
+  ];
+
   return (
-    <div className="relative overflow-hidden bg-cream pt-[calc(var(--header-h)+20px)] pb-20 sm:pb-24">
+    <div className="relative overflow-hidden bg-cream pt-[calc(var(--header-h)+18px)] pb-[72px] sm:pb-24">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-20 -left-24 size-72 rounded-full bg-lilac/45 blur-3xl" />
-        <div className="absolute top-[38%] -right-28 size-80 rounded-full bg-mint/50 blur-3xl" />
+        <div className="absolute -top-24 -left-28 size-72 rounded-full bg-lilac/45 blur-3xl" />
+        <div className="absolute top-[42%] -right-32 size-80 rounded-full bg-mint/50 blur-3xl" />
       </div>
-      <Float className="absolute top-[calc(var(--header-h)+10px)] right-3 w-16 opacity-90" duration={9} rotate={0} y={5}>
-        <CloudShape />
-      </Float>
-      <Float className="absolute top-[calc(var(--header-h)+70px)] left-3 w-6" delay={0.6} duration={5}>
-        <StarShape />
-      </Float>
 
       <div className="relative mx-auto flex max-w-xl flex-col items-center px-4 text-center sm:px-6">
-        <motion.span
-          className="eyebrow text-[12px]"
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease }}
-        >
-          <Sparkles className="size-4 text-lilac-deep" />
+        <motion.span className="eyebrow text-[11.5px]" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease }}>
+          <Flower petals={6} fill={C.lilacDeep} outline={false} className="-my-1 -ml-1 size-5" />
           {h.kicker}
         </motion.span>
 
         <motion.h1
-          className="mt-4 font-black tracking-tight text-forest"
-          initial={{ opacity: 0, y: 18 }}
+          className="mt-4 text-forest"
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.06, ease }}
         >
-          <span className="relative inline-block text-[clamp(2.6rem,12.5vw,3.9rem)] leading-[0.95]">
-            <svg
-              aria-hidden="true"
-              viewBox="0 0 300 40"
-              preserveAspectRatio="none"
-              className="absolute -bottom-1 left-[3%] h-[0.3em] w-[94%]"
-            >
-              <path d="M4 26C70 6 160 4 296 20" stroke="#FFD6B8" strokeWidth="18" strokeLinecap="round" fill="none" />
+          <span className="relative inline-block text-[clamp(2.4rem,11.5vw,3.6rem)] leading-[1] font-extrabold tracking-[-0.025em]">
+            <svg aria-hidden="true" viewBox="0 0 300 40" preserveAspectRatio="none" className="absolute bottom-[-0.05em] left-[3%] h-[0.28em] w-[94%]">
+              <path d="M4 26C70 8 170 4 296 18" stroke={C.peach} strokeWidth="16" strokeLinecap="round" fill="none" />
             </svg>
-            <span className="relative">{h.titleName}</span>
+            <span className="relative"><Quoted text={h.titleName} /></span>
           </span>
-          <span className="mt-2 block text-[clamp(1.3rem,6.3vw,2rem)] leading-tight font-extrabold text-forest-soft">
-            {h.titleRest}
-          </span>
+          <span className="mt-2 block text-[clamp(1.2rem,5.5vw,1.75rem)] leading-tight font-bold text-forest-soft">{h.titleRest}</span>
         </motion.h1>
 
         <motion.p
-          className="mt-4 max-w-sm text-[17px] leading-snug font-bold"
-          initial={{ opacity: 0, y: 18 }}
+          className="mt-3 max-w-[22rem] text-[16px] leading-snug font-medium"
+          initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.14, ease }}
+          transition={{ duration: 0.7, delay: 0.12, ease }}
         >
           {h.subtitle}
         </motion.p>
 
-        {/* арка с фото */}
+        {/* композиция: арка-фото + круглый «цветок» + стикеры. Всё внутри контейнера. */}
         <motion.div
-          className="relative mt-9 w-[min(76%,330px)]"
-          initial={{ opacity: 0, y: 30, scale: 0.95 }}
+          className="relative mt-7 w-full max-w-[360px]"
+          initial={{ opacity: 0, y: 26, scale: 0.96 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          transition={{ duration: 0.9, delay: 0.2, ease }}
+          transition={{ duration: 0.9, delay: 0.18, ease }}
         >
-          <div aria-hidden="true" className="animate-morph absolute -inset-3 translate-x-3 translate-y-3 bg-mint" />
-          <SitePhoto
-            src={main?.src}
-            alt={h.photoAlt}
-            sizes="(max-width: 640px) 80vw, 340px"
-            priority
-            tone="peach"
-            className="relative aspect-[4/5] w-full rounded-[999px_999px_44px_44px] shadow-lift ring-[7px] ring-white"
-          />
-          <SitePhoto
+          <div className="relative mx-auto aspect-[4/5] w-[74%]">
+            <ShapedPhoto
+              shape="arch"
+              back={C.mint}
+              src={main?.src}
+              alt={h.photoAlt}
+              sizes="(max-width: 640px) 75vw, 280px"
+              priority
+              tone="peach"
+              className="absolute inset-0"
+            />
+          </div>
+
+          <ShapedPhoto
+            shape="scallop"
+            back={C.lilac}
             src={second?.src && second.src !== main?.src ? second.src : null}
             alt={h.photoAlt2}
-            sizes="140px"
+            sizes="130px"
             tone="lilac"
-            className="absolute -right-7 -bottom-6 size-[clamp(92px,28vw,128px)] rounded-full shadow-lift ring-[6px] ring-cream"
+            className="absolute right-[3%] bottom-[-4%] aspect-square w-[31%]"
           />
-          <Float className="absolute -top-5 -left-6 w-[clamp(64px,19vw,84px)]" duration={10} rotate={12} y={5}>
-            <SunShape />
+
+          <Float className="absolute top-[-3%] left-[2%] w-[19%]" duration={9} rotate={10} y={4}>
+            <Sun />
           </Float>
-          <Float className="absolute top-[42%] -left-9" delay={0.5} y={6} rotate={-3}>
-            <span className="flex items-center gap-1.5 rounded-full bg-white py-2 pr-3 pl-2 text-[13px] font-extrabold whitespace-nowrap shadow-lift">
+          <Float className="absolute top-[30%] right-[3%] w-[8%]" delay={1.1}>
+            <Star />
+          </Float>
+          <Float className="absolute bottom-[26%] left-[1%] w-[9%]" delay={0.6}>
+            <Flower petals={6} fill={C.peach} />
+          </Float>
+          <Float className="absolute top-[8%] right-[16%] w-[13%] opacity-90" duration={9} rotate={0} y={4}>
+            <Cloud />
+          </Float>
+          <Sparkle className="absolute top-[52%] left-[10%] w-[5%]" fill={C.lilacDeep} />
+
+          <Float className="absolute bottom-[3%] left-[4%]" delay={0.4} y={4} rotate={-2}>
+            <span className="flex items-center gap-1.5 rounded-full bg-white py-1.5 pr-3 pl-1.5 text-[12.5px] font-semibold whitespace-nowrap shadow-lift ring-1 ring-forest/5">
               <span className="grid size-7 place-items-center rounded-full bg-lilac">
                 <Languages className="size-3.5" />
               </span>
               {h.language}
             </span>
           </Float>
-          <Float className="absolute top-[14%] -right-5 w-8" delay={1.2}>
-            <FlowerShape color="#DCCDF7" />
-          </Float>
-          <Float className="absolute -bottom-3 -left-3 w-7" delay={1.8}>
-            <HeartShape />
-          </Float>
         </motion.div>
 
-        {/* факты */}
+        {/* факты — компактная тройка */}
         <motion.ul
-          className="mt-12 grid w-full grid-cols-2 gap-3 text-left"
-          initial={{ opacity: 0, y: 20 }}
+          className="mt-9 grid w-full grid-cols-3 gap-2"
+          initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.35, ease }}
+          transition={{ duration: 0.7, delay: 0.3, ease }}
         >
-          <li className="flex flex-col gap-1.5 rounded-[26px_26px_26px_8px] bg-mint p-4">
-            <Baby className="size-6" />
-            <span className="text-xl leading-tight font-black">{h.ageValue}</span>
-            <span className="text-[13px] leading-tight font-bold text-forest-soft">{h.ageLabel}</span>
-          </li>
-          <li className="flex flex-col gap-1.5 rounded-[26px_8px_26px_26px] bg-peach p-4">
-            <Users className="size-6" />
-            <span className="text-xl leading-tight font-black">{h.groupsValue}</span>
-            <span className="text-[13px] leading-tight font-bold text-forest-soft">{h.groupsLabel}</span>
-          </li>
-          <li className="col-span-2 flex items-center gap-4 rounded-[999px] bg-lilac py-3 pr-6 pl-3">
-            <span className="grid size-12 shrink-0 place-items-center rounded-full bg-white/70">
-              <Clock3 className="size-6" />
-            </span>
-            <span className="flex min-w-0 flex-col">
-              <span className="text-xl leading-tight font-black">{h.hoursValue}</span>
-              <span className="text-[13px] leading-tight font-bold text-forest-soft">{h.hoursLabel}</span>
-            </span>
-          </li>
+          {facts.map(({ Icon, value, label, fill, shape }) => (
+            <li key={label} className="flex min-w-0 flex-col items-center rounded-[22px] bg-white/90 px-1.5 pt-3 pb-3 shadow-soft ring-1 ring-forest/5">
+              <span className="relative grid size-10 place-items-center">
+                <Shape name={shape} fill={fill} outline={false} className="absolute inset-0 size-full" />
+                <Icon className="relative size-[18px]" />
+              </span>
+              <span className="mt-2 font-display text-[clamp(13px,3.9vw,16px)] leading-tight font-bold whitespace-nowrap">{value}</span>
+              <span className="mt-0.5 text-[11.5px] leading-tight text-forest-muted">{label}</span>
+            </li>
+          ))}
         </motion.ul>
 
         <motion.div
-          className="mt-6 flex w-full flex-col gap-3"
-          initial={{ opacity: 0, y: 20 }}
+          className="mt-5 flex w-full flex-col gap-3 sm:flex-row"
+          initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.45, ease }}
+          transition={{ duration: 0.7, delay: 0.4, ease }}
         >
-          <a href="#about" onClick={(e) => scrollTo("about", e)} className="btn-primary h-14 w-full text-[17px]">
+          <a href="#about" onClick={(e) => scrollTo("about", e)} className="btn-primary h-14 w-full text-base sm:flex-1">
             {h.ctaPrimary}
             <ArrowRight className="size-5" />
           </a>
-          <a href="#contact" onClick={(e) => scrollTo("contact", e)} className="btn-soft h-14 w-full text-[17px]">
+          <a href="#contact" onClick={(e) => scrollTo("contact", e)} className="btn-soft h-14 w-full text-base sm:flex-1">
+            <Heart className="w-4" />
             {h.ctaSecondary}
           </a>
         </motion.div>
       </div>
 
-      <Float className="absolute bottom-24 left-4 w-5" delay={1} duration={4}>
-        <SparkleShape />
-      </Float>
       <Wave color="var(--color-mint-soft)" variant={0} />
     </div>
   );

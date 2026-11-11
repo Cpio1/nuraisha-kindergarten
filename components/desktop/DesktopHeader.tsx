@@ -34,7 +34,7 @@ export function DesktopHeader() {
                     href={`#${id}`}
                     onClick={(e) => scrollTo(id, e)}
                     aria-current={isActive ? "true" : undefined}
-                    className={`relative flex h-10 items-center rounded-full px-3 text-[13.5px] font-extrabold whitespace-nowrap transition-colors xl:px-4 xl:text-[15px] ${
+                    className={`relative flex h-10 items-center rounded-full px-3 font-display text-[13.5px] font-bold whitespace-nowrap transition-colors xl:px-4 xl:text-[15px] ${
                       isActive ? "text-forest" : "text-forest-soft hover:text-forest"
                     }`}
                   >

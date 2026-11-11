@@ -1,7 +1,7 @@
 "use client";
 
 import type { GalleryImage } from "@/lib/gallery";
-import { Float, StarShape } from "../shared/Decor";
+import { C, Float, Flower, Star } from "../shared/Shapes";
 import { GalleryEmpty, GalleryEmptyNote, GalleryTile, MoreButton } from "../shared/GalleryParts";
 import { useLang } from "../shared/LanguageProvider";
 import { Lightbox } from "../shared/Lightbox";
@@ -34,13 +34,16 @@ export function MobileGallery({ images }: { images: GalleryImage[] }) {
   const empty = images.length === 0;
 
   return (
-    <div className="relative overflow-hidden bg-cream pt-10 pb-24">
-      <Float className="absolute top-10 right-6 w-7" delay={0.4}>
-        <StarShape color="#DCCDF7" />
+    <div className="relative overflow-hidden bg-cream pt-10 pb-20">
+      <Float className="absolute top-10 right-5 w-7" delay={0.4}>
+        <Star fill={C.lilac} />
       </Float>
-      <div className="relative mx-auto max-w-xl px-4 sm:px-6">
+      <Float className="absolute top-24 left-4 w-7" delay={1.2}>
+        <Flower petals={8} fill={C.peach} />
+      </Float>
+      <div className="relative mx-auto max-w-xl px-4 sm:max-w-2xl sm:px-6">
         <Reveal>
-          <SectionHeading eyebrow={t.gallery.eyebrow} title={t.gallery.title} lead={t.gallery.lead} size="sm" squiggle="#F39A62" />
+          <SectionHeading eyebrow={t.gallery.eyebrow} title={t.gallery.title} lead={t.gallery.lead} accent={C.peachDeep} petal={C.peach} />
         </Reveal>
 
         <div className="mt-7 grid grid-cols-2 gap-3">
@@ -64,7 +67,7 @@ export function MobileGallery({ images }: { images: GalleryImage[] }) {
           <GalleryEmptyNote className="mt-8" />
         ) : (
           (g.hasMore || g.canCollapse) && (
-            <MoreButton hasMore={g.hasMore} onClick={g.toggle} className="mt-7 h-14 w-full text-[17px]" />
+            <MoreButton hasMore={g.hasMore} onClick={g.toggle} className="mt-7 h-14 w-full text-base" />
           )
         )}
       </div>
