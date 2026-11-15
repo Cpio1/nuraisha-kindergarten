@@ -22,10 +22,10 @@ export function DesktopHeader() {
           scrolled ? "bg-cream/85 shadow-[0_8px_30px_-18px_rgba(40,76,67,0.35)] backdrop-blur-xl" : "bg-transparent"
         }`}
       />
-      <div className="relative mx-auto flex h-full max-w-[1320px] items-center justify-between gap-4 px-6 xl:px-10">
+      <div className="relative mx-auto flex h-full max-w-[1320px] items-center justify-between gap-3 px-5 xl:gap-4 xl:px-10">
         <Logo />
         <nav aria-label={t.header.menu}>
-          <ul className="flex items-center rounded-full bg-white/70 p-1.5 ring-1 ring-forest/8 backdrop-blur">
+          <ul className="flex items-center rounded-full bg-white/70 p-1 xl:p-1.5 ring-1 ring-forest/8 backdrop-blur">
             {navIds.map((id) => {
               const isActive = active === id;
               return (
@@ -34,7 +34,7 @@ export function DesktopHeader() {
                     href={`#${id}`}
                     onClick={(e) => scrollTo(id, e)}
                     aria-current={isActive ? "true" : undefined}
-                    className={`relative flex h-10 items-center rounded-full px-3 font-display text-[13.5px] font-bold whitespace-nowrap transition-colors xl:px-4 xl:text-[15px] ${
+                    className={`relative flex h-10 items-center rounded-full px-2.5 font-display text-[13px] font-bold whitespace-nowrap transition-colors xl:px-3.5 xl:text-[15px] ${
                       isActive ? "text-forest" : "text-forest-soft hover:text-forest"
                     }`}
                   >
