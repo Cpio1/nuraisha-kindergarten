@@ -14,11 +14,11 @@ export function MobileClubs() {
   const { t } = useLang();
 
   return (
-    <div className="relative overflow-hidden bg-cream pt-10 pb-20">
+    <div className="relative isolate bg-cream pt-10 pb-20">
       <div className="relative mx-auto max-w-xl px-4 sm:max-w-2xl sm:px-6">
         <Reveal className="relative">
           <SectionHeading eyebrow={t.clubs.eyebrow} title={t.clubs.title} lead={t.clubs.lead} />
-          <Confetti className="absolute top-0 right-0 w-16 opacity-80" />
+          <Confetti className="absolute -top-1 right-0 hidden w-14 opacity-80 min-[400px]:block" />
         </Reveal>
 
         <div className="mt-8 grid gap-4 sm:grid-cols-2">

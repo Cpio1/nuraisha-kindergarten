@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ChevronDown, ChevronUp, Expand } from "lucide-react";
+import { ChevronDown, ChevronUp, Expand, Play } from "lucide-react";
 import { site } from "@/lib/site";
-import type { GalleryImage } from "@/lib/gallery";
+import { isPortrait, type GalleryImage } from "@/lib/media";
 import { InstagramIcon } from "./BrandIcons";
 import { useLang } from "./LanguageProvider";
 import { PhotoPlaceholder } from "./SitePhoto";
@@ -35,14 +35,34 @@ export function GalleryTile({
       aria-label={`${t.gallery.open}: ${index + 1}`}
       className={`group relative block overflow-hidden bg-mint-soft shadow-soft ring-1 ring-forest/5 ${className}`}
     >
-      <Image
-        src={image.src}
-        alt={`${t.gallery.photoAlt} — ${index + 1}`}
-        fill
-        sizes={sizes}
-        loading="lazy"
-        className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
-      />
+      {image.kind === "video" ? (
+        <>
+          <video
+            src={image.src}
+            muted
+            loop
+            autoPlay
+            playsInline
+            preload="metadata"
+            aria-hidden="true"
+            className="absolute inset-0 size-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
+          />
+          <span className="absolute top-3 left-3 grid size-9 place-items-center rounded-full bg-white/90 text-forest shadow-soft">
+            <Play className="size-4 fill-current" />
+          </span>
+        </>
+      ) : (
+        <Image
+          src={image.src}
+          alt={`${t.gallery.photoAlt} — ${index + 1}`}
+          fill
+          sizes={sizes}
+          loading="lazy"
+          className={`object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06] ${
+            isPortrait(image) ? "object-[50%_32%]" : "object-center"
+          }`}
+        />
+      )}
       <span className="absolute inset-0 bg-gradient-to-t from-forest/45 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
       <span className="absolute right-3 bottom-3 grid size-11 translate-y-2 place-items-center rounded-full bg-white/90 text-forest opacity-0 shadow-soft transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:opacity-100">
         <Expand className="size-5" />

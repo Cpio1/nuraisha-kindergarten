@@ -1,9 +1,10 @@
 "use client";
 
-import type { GalleryImage } from "@/lib/gallery";
+import type { SiteMedia } from "@/lib/media";
 import { DesktopAbout } from "./desktop/DesktopAbout";
 import { DesktopClubs } from "./desktop/DesktopClubs";
 import { DesktopContact } from "./desktop/DesktopContact";
+import { DesktopDocs } from "./desktop/DesktopDocs";
 import { DesktopGallery } from "./desktop/DesktopGallery";
 import { DesktopHeader } from "./desktop/DesktopHeader";
 import { DesktopHero } from "./desktop/DesktopHero";
@@ -11,6 +12,7 @@ import { DesktopMeals } from "./desktop/DesktopMeals";
 import { MobileAbout } from "./mobile/MobileAbout";
 import { MobileClubs } from "./mobile/MobileClubs";
 import { MobileContact } from "./mobile/MobileContact";
+import { MobileDocs } from "./mobile/MobileDocs";
 import { MobileGallery } from "./mobile/MobileGallery";
 import { MobileHeader } from "./mobile/MobileHeader";
 import { MobileHero } from "./mobile/MobileHero";
@@ -19,10 +21,7 @@ import { Footer } from "./shared/Footer";
 import { LanguageProvider, useLang } from "./shared/LanguageProvider";
 import { Section } from "./shared/Section";
 
-type Props = {
-  images: GalleryImage[];
-  hero: { main: GalleryImage | null; second: GalleryImage | null };
-};
+type Props = { media: SiteMedia };
 
 export function SiteShell(props: Props) {
   return (
@@ -32,7 +31,8 @@ export function SiteShell(props: Props) {
   );
 }
 
-function Page({ images, hero }: Props) {
+function Page({ media }: Props) {
+  const { hero, about, gallery } = media;
   const { t } = useLang();
   return (
     <>
@@ -44,17 +44,18 @@ function Page({ images, hero }: Props) {
       </a>
       <DesktopHeader />
       <MobileHeader />
-      <main id="main" className="relative overflow-x-clip">
-        <Section id="home" label={t.nav.home} desktop={<DesktopHero {...hero} />} mobile={<MobileHero {...hero} />} />
-        <Section id="about" label={t.nav.about} desktop={<DesktopAbout />} mobile={<MobileAbout />} />
+      <main id="main" className="relative">
+        <Section id="home" label={t.nav.home} desktop={<DesktopHero photo={hero} />} mobile={<MobileHero photo={hero} />} />
+        <Section id="about" label={t.nav.about} desktop={<DesktopAbout photo={about} />} mobile={<MobileAbout photo={about} />} />
         <Section id="clubs" label={t.nav.clubs} desktop={<DesktopClubs />} mobile={<MobileClubs />} />
         <Section id="meals" label={t.nav.meals} desktop={<DesktopMeals />} mobile={<MobileMeals />} />
         <Section
           id="gallery"
           label={t.nav.gallery}
-          desktop={<DesktopGallery images={images} />}
-          mobile={<MobileGallery images={images} />}
+          desktop={<DesktopGallery images={gallery} />}
+          mobile={<MobileGallery images={gallery} />}
         />
+        <Section id="docs" label={t.nav.docs} desktop={<DesktopDocs />} mobile={<MobileDocs />} />
         <Section id="contact" label={t.nav.contact} desktop={<DesktopContact />} mobile={<MobileContact />} />
       </main>
       <Footer />

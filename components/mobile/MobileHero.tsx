@@ -2,18 +2,19 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight, Baby, Clock3, Languages, Users } from "lucide-react";
-import type { GalleryImage } from "@/lib/gallery";
+import type { GalleryImage } from "@/lib/media";
 import { useLang } from "../shared/LanguageProvider";
 import { Quoted } from "../shared/Quoted";
 import { C, Cloud, Flower, Float, Heart, Shape, Sparkle, Star, Sun } from "../shared/Shapes";
-import { ShapedPhoto } from "../shared/SitePhoto";
+import { FramedPhoto } from "../shared/SitePhoto";
 import { Wave } from "../shared/Wave";
 import { useScrollTo } from "../shared/useScrollTo";
 
 const ease = [0.22, 1, 0.36, 1] as const;
 
-export function MobileHero({ main, second }: { main: GalleryImage | null; second: GalleryImage | null }) {
+export function MobileHero({ photo }: { photo: GalleryImage | null }) {
   const { t } = useLang();
+  const ratio = photo ? photo.width / photo.height : 3 / 4;
   const scrollTo = useScrollTo();
   const h = t.hero;
 
@@ -24,12 +25,14 @@ export function MobileHero({ main, second }: { main: GalleryImage | null; second
   ];
 
   return (
-    <div className="relative overflow-hidden bg-cream pt-[calc(var(--header-h)+18px)] pb-[72px] sm:pb-24">
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-24 -left-28 size-72 rounded-full bg-lilac/45 blur-3xl" />
-        <div className="absolute top-[42%] -right-32 size-80 rounded-full bg-mint/50 blur-3xl" />
+    <div className="relative isolate bg-cream pt-[calc(var(--header-h)+18px)] pb-[72px] sm:pb-24">
+      {/* декоративный слой: фигурки ограничены им и лежат под контентом */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+          <div className="absolute -top-24 -left-28 size-72 rounded-full bg-lilac/45 blur-3xl" />
+          <div className="absolute top-[42%] -right-32 size-80 rounded-full bg-mint/50 blur-3xl" />
+        </div>
       </div>
-
       <div className="relative mx-auto flex max-w-xl flex-col items-center px-4 text-center sm:px-6">
         <motion.span className="eyebrow text-[11.5px]" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease }}>
           <Flower petals={6} fill={C.lilacDeep} outline={false} className="-my-1 -ml-1 size-5" />
@@ -60,63 +63,51 @@ export function MobileHero({ main, second }: { main: GalleryImage | null; second
           {h.subtitle}
         </motion.p>
 
-        {/* композиция: арка-фото + круглый «цветок» + стикеры. Всё внутри контейнера. */}
+        {/* композиция: фото-арка с реальными пропорциями файла; фигурки — только по краям */}
         <motion.div
-          className="relative mt-7 w-full max-w-[360px]"
+          className="relative mt-7 flex w-full max-w-[380px] flex-col items-center"
           initial={{ opacity: 0, y: 26, scale: 0.96 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 0.9, delay: 0.18, ease }}
         >
-          <div className="relative mx-auto aspect-[4/5] w-[74%]">
-            <ShapedPhoto
-              shape="arch"
-              back={C.mint}
-              src={main?.src}
+          <div className="relative" style={{ width: `min(72%, 62svh * ${ratio})` }}>
+            <FramedPhoto
+              image={photo}
               alt={h.photoAlt}
-              sizes="(max-width: 640px) 75vw, 280px"
+              sizes="(max-width: 640px) 72vw, 280px"
               priority
+              back={C.mint}
+              arch={26}
               tone="peach"
-              className="absolute inset-0"
+              className="w-full"
             />
+
+            <Float className="absolute top-[-6%] left-[-17%] w-[27%]" duration={9} rotate={10} y={4}>
+              <Sun />
+            </Float>
+            <Float className="absolute top-[-3%] right-[-19%] w-[22%] opacity-90" duration={9} rotate={0} y={4}>
+              <Cloud />
+            </Float>
+            <Float className="absolute top-[36%] right-[-15%] w-[10%]" delay={1.1}>
+              <Star />
+            </Float>
+            <Float className="absolute bottom-[22%] left-[-17%] w-[12%]" delay={0.6}>
+              <Flower petals={6} fill={C.peach} />
+            </Float>
+            <Sparkle className="absolute bottom-[6%] right-[-12%] w-[7%]" fill={C.lilacDeep} />
           </div>
 
-          <ShapedPhoto
-            shape="scallop"
-            back={C.lilac}
-            src={second?.src && second.src !== main?.src ? second.src : null}
-            alt={h.photoAlt2}
-            sizes="130px"
-            tone="lilac"
-            className="absolute right-[3%] bottom-[-4%] aspect-square w-[31%]"
-          />
-
-          <Float className="absolute top-[-3%] left-[2%] w-[19%]" duration={9} rotate={10} y={4}>
-            <Sun />
-          </Float>
-          <Float className="absolute top-[30%] right-[3%] w-[8%]" delay={1.1}>
-            <Star />
-          </Float>
-          <Float className="absolute bottom-[26%] left-[1%] w-[9%]" delay={0.6}>
-            <Flower petals={6} fill={C.peach} />
-          </Float>
-          <Float className="absolute top-[8%] right-[16%] w-[13%] opacity-90" duration={9} rotate={0} y={4}>
-            <Cloud />
-          </Float>
-          <Sparkle className="absolute top-[52%] left-[10%] w-[5%]" fill={C.lilacDeep} />
-
-          <Float className="absolute bottom-[3%] left-[4%]" delay={0.4} y={4} rotate={-2}>
-            <span className="flex items-center gap-1.5 rounded-full bg-white py-1.5 pr-3 pl-1.5 text-[12.5px] font-semibold whitespace-nowrap shadow-lift ring-1 ring-forest/5">
-              <span className="grid size-7 place-items-center rounded-full bg-lilac">
-                <Languages className="size-3.5" />
-              </span>
-              {h.language}
+          <span className="mt-5 inline-flex -rotate-2 items-center gap-1.5 rounded-full bg-white py-1.5 pr-3 pl-1.5 text-[12.5px] font-semibold whitespace-nowrap shadow-lift ring-1 ring-forest/5">
+            <span className="grid size-7 place-items-center rounded-full bg-lilac">
+              <Languages className="size-3.5" />
             </span>
-          </Float>
+            {h.language}
+          </span>
         </motion.div>
 
         {/* факты — компактная тройка */}
         <motion.ul
-          className="mt-9 grid w-full grid-cols-3 gap-2"
+          className="mt-7 grid w-full grid-cols-3 gap-2"
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.3, ease }}

@@ -22,6 +22,8 @@ export const site = {
   twoGisUrl: null as string | null,
   /** Ссылка для встраивания карты 2GIS (iframe). */
   twoGisEmbedUrl: null as string | null,
+  /** Папка с документами детского сада (Облако Mail.ru). */
+  documentsUrl: "https://cloud.mail.ru/public/hhxy/QwqtMmPoU",
   hours: "07:30–18:00",
   ages: "3–5",
   groups: 2,
@@ -35,6 +37,6 @@ export function whatsappHref(phone: string) {
   return `https://wa.me/${phone.replace(/\D/g, "")}`;
 }
 
-export type NavId = "home" | "about" | "clubs" | "meals" | "gallery" | "contact";
+export type NavId = "home" | "about" | "clubs" | "meals" | "gallery" | "docs" | "contact";
 
-export const navIds: NavId[] = ["home", "about", "clubs", "meals", "gallery", "contact"];
+export const navIds: NavId[] = ["home", "about", "clubs", "meals", "gallery", "docs", "contact"];

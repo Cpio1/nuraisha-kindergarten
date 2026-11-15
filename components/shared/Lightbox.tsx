@@ -4,7 +4,7 @@ import Image from "next/image";
 import { AnimatePresence, motion, type PanInfo } from "framer-motion";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { useCallback, useEffect, useRef } from "react";
-import type { GalleryImage } from "@/lib/gallery";
+import type { GalleryImage } from "@/lib/media";
 import { useLang } from "./LanguageProvider";
 import { useScrollLock } from "./useScrollLock";
 
@@ -100,21 +100,31 @@ export function Lightbox({
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.96 }}
                 transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
-                drag={total > 1 ? "x" : false}
+                drag={total > 1 && img.kind === "image" ? "x" : false}
                 dragConstraints={{ left: 0, right: 0 }}
                 dragElastic={0.5}
                 onDragEnd={onDragEnd}
                 onClick={(e) => e.stopPropagation()}
               >
-                <Image
-                  src={img.src}
-                  alt={`${t.gallery.photoAlt} — ${index! + 1}`}
-                  fill
-                  sizes="100vw"
-                  className="pointer-events-none rounded-2xl object-contain select-none"
-                  draggable={false}
-                  priority
-                />
+                {img.kind === "video" ? (
+                  <video
+                    src={img.src}
+                    controls
+                    autoPlay
+                    playsInline
+                    className="absolute inset-0 size-full rounded-2xl object-contain"
+                  />
+                ) : (
+                  <Image
+                    src={img.src}
+                    alt={`${t.gallery.photoAlt} — ${index! + 1}`}
+                    fill
+                    sizes="100vw"
+                    className="pointer-events-none rounded-2xl object-contain select-none"
+                    draggable={false}
+                    priority
+                  />
+                )}
               </motion.div>
             </AnimatePresence>
 

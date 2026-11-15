@@ -14,8 +14,8 @@ import { useActiveSection, useScrolled } from "../shared/useActiveSection";
 import { useScrollLock } from "../shared/useScrollLock";
 import { useScrollTo } from "../shared/useScrollTo";
 
-const navTones: Tone[] = ["mint", "lilac", "peach", "mint", "lilac", "peach"];
-const navShapes = ["blob1", "flower6", "blob3", "star4", "pebble", "flower8"] as const;
+const navTones: Tone[] = ["mint", "lilac", "peach", "mint", "lilac", "peach", "mint"];
+const navShapes = ["blob1", "flower6", "blob3", "star4", "pebble", "blob2", "flower8"] as const;
 
 export function MobileHeader() {
   const { t } = useLang();

@@ -20,21 +20,23 @@ export function DesktopContact() {
   const items = useContactItems();
 
   return (
-    <div className="relative overflow-hidden bg-mint-soft pt-[clamp(40px,6vw,80px)] pb-[clamp(96px,9vw,140px)]">
-      <Float className="absolute top-14 left-[40%] hidden w-24 xl:block" duration={12} rotate={0}>
-        <Cloud />
-      </Float>
-      <Float className="absolute bottom-[22%] left-[2.5%] hidden w-8 xl:block" delay={0.6}>
-        <Star />
-      </Float>
-
+    <div className="relative isolate bg-mint-soft pt-[clamp(28px,3.6vw,56px)] pb-[clamp(76px,7.5vw,112px)]">
+      {/* декоративный слой: фигурки ограничены им и лежат под контентом */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <Float className="absolute top-14 left-[40%] hidden w-24 xl:block" duration={12} rotate={0}>
+          <Cloud />
+        </Float>
+        <Float className="absolute bottom-[22%] left-[2.5%] hidden w-8 xl:block" delay={0.6}>
+          <Star />
+        </Float>
+      </div>
       <div className="relative mx-auto grid max-w-[1200px] grid-cols-12 items-center gap-10 px-8 xl:gap-16 xl:px-12">
         <div className="col-span-5 min-w-0">
           <Reveal>
             <SectionHeading eyebrow={c.eyebrow} title={c.title} lead={c.lead} align="left" />
           </Reveal>
 
-          <ul className="mt-7 space-y-3">
+          <ul className="mt-6 space-y-2.5">
             {items.map((it, i) => {
               const inner = (
                 <>
@@ -70,12 +72,12 @@ export function DesktopContact() {
           </ul>
 
           <Reveal delay={0.2} className="mt-7 flex flex-wrap gap-3">
-            <a href={site.instagram.url} target="_blank" rel="noopener noreferrer" className="btn-primary h-[52px] px-7">
+            <a href={site.instagram.url} target="_blank" rel="noopener noreferrer" className="btn-primary h-12 px-6">
               <InstagramIcon className="size-5" />
               {c.instagramCta}
             </a>
             {site.whatsapp && (
-              <a href={whatsappHref(site.whatsapp)} target="_blank" rel="noopener noreferrer" className="btn-soft h-[52px] px-7">
+              <a href={whatsappHref(site.whatsapp)} target="_blank" rel="noopener noreferrer" className="btn-soft h-12 px-6">
                 <WhatsAppIcon className="size-5 text-mint-deep" />
                 {c.whatsappCta}
               </a>
@@ -88,8 +90,8 @@ export function DesktopContact() {
           {/* подложка-клякса строго внутри колонки */}
           <div className="relative p-[4%]">
             <Shape name="blob4" fill={C.lilac} outline={false} stretch className="absolute -inset-[3%] size-[106%]" />
-            <MapCard className="relative h-[clamp(360px,34vw,480px)] rounded-[48px_48px_48px_16px] ring-8 ring-white" />
-            <Float className="absolute top-0 right-[3%] w-[clamp(60px,6vw,84px)]" duration={10} rotate={12} y={5}>
+            <MapCard className="relative h-[clamp(300px,27vw,400px)] rounded-[48px_48px_48px_16px] ring-8 ring-white" />
+            <Float className="absolute top-0 right-[3%] w-[clamp(48px,4.6vw,68px)]" duration={10} rotate={12} y={5}>
               <Sun />
             </Float>
             <Float className="absolute bottom-[1%] left-[3%] w-10" delay={0.8}>

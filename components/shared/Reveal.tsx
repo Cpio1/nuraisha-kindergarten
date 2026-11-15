@@ -7,7 +7,7 @@ type Common = { delay?: number; y?: number; x?: number };
 const anim = (delay: number, y: number, x: number) => ({
   initial: { opacity: 0, y, x },
   whileInView: { opacity: 1, y: 0, x: 0 },
-  viewport: { once: true, margin: "0px 0px -12% 0px" },
+  viewport: { once: true, margin: "0px 0px -6% 0px" },
   transition: { duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] as const },
 });
 

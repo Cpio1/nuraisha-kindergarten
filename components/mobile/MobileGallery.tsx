@@ -1,6 +1,7 @@
 "use client";
 
-import type { GalleryImage } from "@/lib/gallery";
+import { useMemo } from "react";
+import { arrangeByFit, type Fit, type GalleryImage } from "@/lib/media";
 import { C, Float, Flower, Star } from "../shared/Shapes";
 import { GalleryEmpty, GalleryEmptyNote, GalleryTile, MoreButton } from "../shared/GalleryParts";
 import { useLang } from "../shared/LanguageProvider";
@@ -18,6 +19,9 @@ const pattern = [
   "aspect-[4/5] rounded-[24px_24px_24px_60px]",
 ];
 
+/** Какая ориентация фото лучше подходит каждой плитке рисунка (по порядку). */
+const fits: Fit[] = ["landscape", "landscape", "portrait", "portrait", "portrait"];
+
 /** Если последняя плитка осталась без пары — растягиваем её на всю ширину. */
 function tileClass(i: number, shown: number) {
   const pos = i % pattern.length;
@@ -28,19 +32,23 @@ function tileClass(i: number, shown: number) {
 const INITIAL = 5;
 const STEP = 6;
 
-export function MobileGallery({ images }: { images: GalleryImage[] }) {
+export function MobileGallery({ images: files }: { images: GalleryImage[] }) {
   const { t } = useLang();
+  const images = useMemo(() => arrangeByFit(files, fits), [files]);
   const g = useGallery(images.length, INITIAL, STEP);
   const empty = images.length === 0;
 
   return (
-    <div className="relative overflow-hidden bg-cream pt-10 pb-20">
-      <Float className="absolute top-10 right-5 w-7" delay={0.4}>
-        <Star fill={C.lilac} />
-      </Float>
-      <Float className="absolute top-24 left-4 w-7" delay={1.2}>
-        <Flower petals={8} fill={C.peach} />
-      </Float>
+    <div className="relative isolate bg-cream pt-10 pb-20">
+      {/* декоративный слой: фигурки ограничены им и лежат под контентом */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <Float className="absolute top-10 right-5 w-7" delay={0.4}>
+          <Star fill={C.lilac} />
+        </Float>
+        <Float className="absolute top-24 left-4 w-7" delay={1.2}>
+          <Flower petals={8} fill={C.peach} />
+        </Float>
+      </div>
       <div className="relative mx-auto max-w-xl px-4 sm:max-w-2xl sm:px-6">
         <Reveal>
           <SectionHeading eyebrow={t.gallery.eyebrow} title={t.gallery.title} lead={t.gallery.lead} accent={C.peachDeep} petal={C.peach} />
@@ -72,7 +80,7 @@ export function MobileGallery({ images }: { images: GalleryImage[] }) {
         )}
       </div>
       <Lightbox images={images} index={g.openIndex} onClose={g.close} onIndex={g.setOpenIndex} />
-      <Wave color="var(--color-mint-soft)" variant={1} />
+      <Wave color="var(--color-lilac-soft)" variant={1} />
     </div>
   );
 }

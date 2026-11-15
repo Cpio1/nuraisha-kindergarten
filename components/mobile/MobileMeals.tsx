@@ -13,10 +13,13 @@ export function MobileMeals() {
   const m = t.meals;
 
   return (
-    <div className="relative overflow-hidden bg-lilac-soft pt-10 pb-20">
-      <Float className="absolute top-8 left-4 w-14" duration={10} rotate={0}>
-        <Cloud />
-      </Float>
+    <div className="relative isolate bg-lilac-soft pt-10 pb-20">
+      {/* декоративный слой: фигурки ограничены им и лежат под контентом */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <Float className="absolute top-8 left-4 w-14" duration={10} rotate={0}>
+          <Cloud />
+        </Float>
+      </div>
       <div className="relative mx-auto max-w-xl px-4 sm:max-w-2xl sm:px-6">
         <Reveal className="flex flex-col items-center">
           <Float className="mb-3 w-14" duration={10} rotate={10} y={4}>
@@ -31,7 +34,7 @@ export function MobileMeals() {
             const c = tones[tone];
             return (
               <RevealItem key={key} delay={0.06 * i} className="flex flex-col items-center text-center">
-                <div className="relative grid aspect-square w-[min(100%,128px)] place-items-center">
+                <div className="relative grid aspect-square w-[min(100%,112px)] place-items-center">
                   <Shape name="scallop" fill="#fff" className="absolute inset-0 size-full drop-shadow-[0_10px_16px_rgba(40,76,67,0.12)]" />
                   <span className={`absolute inset-[18%] rounded-full ${c.soft}`} />
                   <span className="relative grid size-[42%] place-items-center">

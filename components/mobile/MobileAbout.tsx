@@ -5,21 +5,25 @@ import { groupTones, pillars, tones } from "../shared/content";
 import { useLang } from "../shared/LanguageProvider";
 import { Reveal, RevealItem } from "../shared/Reveal";
 import { SectionHeading } from "../shared/SectionHeading";
-import { C, Cloud, Flower, Float, Leaf, Shape, Star } from "../shared/Shapes";
+import { C, Cloud, Flower, Float, Leaf, Shape, Sparkle, Star } from "../shared/Shapes";
 import { Wave } from "../shared/Wave";
+import { FramedPhoto } from "../shared/SitePhoto";
+import type { GalleryImage } from "@/lib/media";
 
 const pillarShapes = ["blob2", "blob4", "blob3"] as const;
 
-export function MobileAbout() {
+export function MobileAbout({ photo }: { photo: GalleryImage | null }) {
   const { t } = useLang();
   const a = t.about;
 
   return (
-    <div className="relative overflow-hidden bg-mint-soft pt-10 pb-20">
-      <Float className="absolute top-6 right-4 w-14" duration={10} rotate={0}>
-        <Cloud />
-      </Float>
-
+    <div className="relative isolate bg-mint-soft pt-10 pb-20">
+      {/* декоративный слой: фигурки ограничены им и лежат под контентом */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <Float className="absolute top-6 right-4 w-14" duration={10} rotate={0}>
+          <Cloud />
+        </Float>
+      </div>
       <div className="relative mx-auto max-w-xl px-4 sm:max-w-2xl sm:px-6">
         <Reveal>
           <SectionHeading eyebrow={a.eyebrow} title={a.title} align="left" accent={C.peachDeep} petal={C.peach} />
@@ -57,6 +61,27 @@ export function MobileAbout() {
             {a.languageNote}
           </p>
         </Reveal>
+
+        {/* фото main-page2 — только если файл действительно есть */}
+        {photo && (
+          <Reveal className="mt-9 flex justify-center">
+            <div className="relative" style={{ width: `min(100% - 40px, 60svh * ${photo.width / photo.height}, 420px)` }}>
+              <FramedPhoto
+                image={photo}
+                alt={t.hero.photoAlt2}
+                sizes="(max-width: 640px) 88vw, 420px"
+                back={C.peach}
+                radius="rounded-[40px_40px_40px_14px]"
+                tone="mint"
+                className="w-full"
+              />
+              <Float className="absolute -top-[6%] -right-[6%] w-[12%]" delay={0.5}>
+                <Flower petals={6} fill={C.lilac} />
+              </Float>
+              <Sparkle className="absolute -bottom-[5%] -left-[5%] w-[8%]" fill={C.peachDeep} />
+            </div>
+          </Reveal>
+        )}
 
         {/* группы */}
         <div className="mt-12">

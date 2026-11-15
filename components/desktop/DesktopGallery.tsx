@@ -1,6 +1,7 @@
 "use client";
 
-import type { GalleryImage } from "@/lib/gallery";
+import { useMemo } from "react";
+import { arrangeByFit, type Fit, type GalleryImage } from "@/lib/media";
 import { C, Confetti, Drop, Flower, Float, Sparkle, Star } from "../shared/Shapes";
 import { GalleryEmpty, GalleryEmptyNote, GalleryTile, MoreButton } from "../shared/GalleryParts";
 import { useLang } from "../shared/LanguageProvider";
@@ -21,6 +22,9 @@ const pattern = [
   "rounded-[28px]",
 ];
 
+/** Какая ориентация фото лучше подходит каждой плитке рисунка (по порядку). */
+const fits: Fit[] = ["landscape", "landscape", "portrait", "portrait", "landscape", "landscape", "any"];
+
 const tailShapes = ["rounded-[28px]", "rounded-[14px_28px_28px_28px]", "rounded-[28px_28px_60px_28px]", "rounded-[28px_14px_28px_28px]"];
 const spanFill = ["", "col-span-2", "col-span-3", "col-span-4"];
 
@@ -39,26 +43,29 @@ function tileClass(i: number, shown: number) {
 const INITIAL = 7;
 const STEP = 7;
 
-export function DesktopGallery({ images }: { images: GalleryImage[] }) {
+export function DesktopGallery({ images: files }: { images: GalleryImage[] }) {
   const { t } = useLang();
+  const images = useMemo(() => arrangeByFit(files, fits), [files]);
   const g = useGallery(images.length, INITIAL, STEP);
   const empty = images.length === 0;
 
   return (
-    <div className="relative overflow-hidden bg-cream pt-[clamp(40px,6vw,80px)] pb-[clamp(96px,10vw,150px)]">
-      <Float className="absolute top-24 left-[6%] hidden w-10 xl:block" delay={0.3}>
-        <Star fill={C.lilac} />
-      </Float>
-      <Float className="absolute top-32 right-[7%] hidden w-12 xl:block" delay={1}>
-        <Flower petals={8} fill={C.peach} />
-      </Float>
-      <Float className="absolute bottom-40 left-[2.5%] hidden w-8 xl:block" delay={1.6} duration={6}>
-        <Drop fill={C.mint} />
-      </Float>
-      <Float className="absolute right-[3%] bottom-48 hidden w-5 xl:block" delay={0.4} duration={4}>
-        <Sparkle fill={C.mintDeep} />
-      </Float>
-
+    <div className="relative isolate bg-cream pt-[clamp(28px,3.6vw,56px)] pb-[clamp(76px,7.5vw,112px)]">
+      {/* декоративный слой: фигурки ограничены им и лежат под контентом */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <Float className="absolute top-24 left-[6%] hidden w-10 xl:block" delay={0.3}>
+          <Star fill={C.lilac} />
+        </Float>
+        <Float className="absolute top-32 right-[7%] hidden w-12 xl:block" delay={1}>
+          <Flower petals={8} fill={C.peach} />
+        </Float>
+        <Float className="absolute bottom-40 left-[2.5%] hidden w-8 xl:block" delay={1.6} duration={6}>
+          <Drop fill={C.mint} />
+        </Float>
+        <Float className="absolute right-[3%] bottom-48 hidden w-5 xl:block" delay={0.4} duration={4}>
+          <Sparkle fill={C.mintDeep} />
+        </Float>
+      </div>
       <div className="relative mx-auto max-w-[1200px] px-8 xl:px-12">
         <Reveal>
           <div className="relative">
@@ -67,7 +74,7 @@ export function DesktopGallery({ images }: { images: GalleryImage[] }) {
           </div>
         </Reveal>
 
-        <div className="mt-12 grid auto-rows-[clamp(140px,13vw,200px)] grid-cols-4 gap-4 xl:gap-5 [grid-auto-flow:dense]">
+        <div className="mx-auto mt-9 grid max-w-[1040px] auto-rows-[clamp(130px,12.5vw,190px)] grid-cols-4 gap-4 xl:gap-5 [grid-auto-flow:dense]">
           {empty ? (
             <GalleryEmpty count={INITIAL} tileClass={(i) => pattern[i % pattern.length]} />
           ) : (
@@ -92,15 +99,15 @@ export function DesktopGallery({ images }: { images: GalleryImage[] }) {
           </Reveal>
         ) : (
           (g.hasMore || g.canCollapse) && (
-            <div className="mt-12 flex justify-center">
-              <MoreButton hasMore={g.hasMore} onClick={g.toggle} className="h-[52px] px-8 text-base" />
+            <div className="mt-9 flex justify-center">
+              <MoreButton hasMore={g.hasMore} onClick={g.toggle} className="h-12 px-7 text-[15px]" />
             </div>
           )
         )}
       </div>
 
       <Lightbox images={images} index={g.openIndex} onClose={g.close} onIndex={g.setOpenIndex} />
-      <Wave color="var(--color-mint-soft)" variant={1} />
+      <Wave color="var(--color-lilac-soft)" variant={1} />
     </div>
   );
 }

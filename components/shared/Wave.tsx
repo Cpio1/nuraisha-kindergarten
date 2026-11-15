@@ -26,7 +26,7 @@ export function Wave({
       <svg
         viewBox="0 0 1440 112"
         preserveAspectRatio="none"
-        className={`block h-10 w-full sm:h-14 lg:h-20 xl:h-24 ${flip ? "-scale-x-100" : ""}`}
+        className={`block h-9 w-full sm:h-12 lg:h-16 xl:h-20 ${flip ? "-scale-x-100" : ""}`}
       >
         <path d={paths[variant]} fill={color} />
       </svg>

@@ -18,10 +18,13 @@ export function MobileContact() {
   const items = useContactItems();
 
   return (
-    <div className="relative overflow-hidden bg-mint-soft pt-10 pb-20">
-      <Float className="absolute top-8 right-4 w-14" duration={10} rotate={12} y={4}>
-        <Sun />
-      </Float>
+    <div className="relative isolate bg-mint-soft pt-10 pb-20">
+      {/* декоративный слой: фигурки ограничены им и лежат под контентом */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <Float className="absolute top-8 right-4 w-14" duration={10} rotate={12} y={4}>
+          <Sun />
+        </Float>
+      </div>
       <div className="relative mx-auto max-w-xl px-4 sm:max-w-2xl sm:px-6">
         <Reveal>
           <SectionHeading eyebrow={c.eyebrow} title={c.title} lead={c.lead} align="left" />

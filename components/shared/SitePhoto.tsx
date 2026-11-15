@@ -1,9 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, type CSSProperties } from "react";
 import { C, Cloud, Flower, Star, maskStyle } from "./Shapes";
 import { shapes, type ShapeName } from "./shapePaths";
+import type { GalleryImage } from "@/lib/media";
 
 const shapesOf = (n: ShapeName) => shapes[n];
 
@@ -117,6 +118,70 @@ export function ShapedPhoto({
       >
         <path d={s.d} fill="none" stroke="#284C43" strokeOpacity=".5" strokeWidth="1.5" vectorEffect="non-scaling-stroke" />
       </svg>
+    </div>
+  );
+}
+
+/**
+ * Фото в мягкой рамке с РЕАЛЬНЫМИ пропорциями файла — ничего не обрезается.
+ * Сзади — цветная «тень»-подложка и смещённый пунктирный контур (как у стикеров).
+ * Форма задаётся border-radius через `radius` (например арка сверху).
+ */
+export function FramedPhoto({
+  image,
+  alt,
+  sizes,
+  priority = false,
+  back,
+  radius = "rounded-[36px]",
+  arch,
+  tone = "mint",
+  fallbackRatio = 3 / 4,
+  className = "",
+}: {
+  image: GalleryImage | null | undefined;
+  alt: string;
+  sizes: string;
+  priority?: boolean;
+  back: string;
+  radius?: string;
+  /** Арка: круглый верх + скругление низа (px). Перекрывает `radius`. */
+  arch?: number;
+  tone?: Tone;
+  fallbackRatio?: number;
+  className?: string;
+}) {
+  const [failed, setFailed] = useState(false);
+  const ratio = image ? image.width / image.height : fallbackRatio;
+  const pos = /\b(absolute|fixed)\b/.test(className) ? "" : "relative ";
+  // круглый (не эллиптический) купол при любых пропорциях фото
+  const v = Math.min(50, 50 * ratio);
+  const shape: CSSProperties | undefined =
+    arch !== undefined ? { borderRadius: `50% 50% ${arch}px ${arch}px / ${v}% ${v}% ${arch}px ${arch}px` } : undefined;
+  if (shape) radius = "";
+  return (
+    <div className={`${pos}${className}`} style={{ aspectRatio: ratio }}>
+      <div aria-hidden="true" className={`absolute inset-0 translate-x-[4%] translate-y-[3%] ${radius}`} style={{ ...shape, background: back }} />
+      <div className={`absolute inset-0 overflow-hidden bg-mint-soft shadow-soft ring-1 ring-forest/10 ${radius}`} style={shape}>
+        {image && !failed ? (
+          <Image
+            src={image.src}
+            alt={alt}
+            fill
+            sizes={sizes}
+            priority={priority}
+            className="object-cover"
+            onError={() => setFailed(true)}
+          />
+        ) : (
+          <PhotoPlaceholder tone={tone} label={alt} />
+        )}
+      </div>
+      <div
+        aria-hidden="true"
+        className={`pointer-events-none absolute inset-0 -translate-x-[2.5%] -translate-y-[2%] border-[1.5px] border-dashed border-forest/40 ${radius}`}
+        style={shape}
+      />
     </div>
   );
 }
