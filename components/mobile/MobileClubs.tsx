@@ -8,7 +8,7 @@ import { SectionHeading } from "../shared/SectionHeading";
 import { C, Confetti, Shape } from "../shared/Shapes";
 import { Wave } from "../shared/Wave";
 
-const iconShapes = ["flower6", "star4", "pebble"] as const;
+const iconShapes = ["flower6", "star4"] as const;
 
 export function MobileClubs() {
   const { t } = useLang();
@@ -26,11 +26,11 @@ export function MobileClubs() {
             const item = t.clubs.items[key];
             const c = tones[tone];
             return (
-              <Reveal key={key} delay={0.05 * i} className={i === 2 ? "sm:col-span-2" : ""}>
+              <Reveal key={key} delay={0.05 * i}>
                 <article className="relative h-full overflow-hidden rounded-[32px] bg-white shadow-soft ring-1 ring-forest/5">
-                  <div className={`relative flex h-[132px] items-center justify-center rounded-b-[40%_26px] px-6 ${c.bg}`}>
+                  <div className={`relative flex h-[clamp(140px,42vw,170px)] items-center justify-center rounded-b-[40%_26px] px-6 ${c.bg}`}>
                     <div className="dots-bg absolute inset-0 opacity-30" aria-hidden="true" />
-                    <ClubArt club={key} className="relative h-full max-h-[112px] w-auto py-3" />
+                    <ClubArt club={key} className="relative h-full w-auto max-w-full py-3" />
                   </div>
                   <div className="px-5 pb-5">
                     <div className="flex items-end gap-3">
@@ -44,6 +44,13 @@ export function MobileClubs() {
                     </div>
                     <p className={`mt-2 font-display text-[14.5px] font-bold ${c.text}`}>{item.subtitle}</p>
                     <p className="mt-1.5 text-[14.5px] leading-relaxed text-forest-soft">{item.text}</p>
+                    <ul className="mt-3.5 flex flex-wrap gap-1.5">
+                      {item.tags.map((tag) => (
+                        <li key={tag} className={`rounded-full px-3 py-1 font-display text-[12.5px] font-bold ${c.soft} ${c.text}`}>
+                          {tag}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
                 </article>
               </Reveal>

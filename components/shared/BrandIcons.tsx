@@ -30,17 +30,6 @@ export function BeltIcon({ className }: P) {
   );
 }
 
-/** «ABC» для английского языка. */
-export function AbcIcon({ className }: P) {
-  return (
-    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-      <path d="m2 17 3-9 3 9M3 14.2h4" />
-      <path d="M10 8v9h2.6a2.2 2.2 0 0 0 0-4.5H10M10 12.5h2.2a2.2 2.2 0 0 0 0-4.5H10" />
-      <path d="M22 9.3A3.6 3.6 0 0 0 19.3 8c-2 0-3.3 2-3.3 4.5S17.3 17 19.3 17c1.1 0 2-.5 2.7-1.3" />
-    </svg>
-  );
-}
-
 export function LogoMark({ className }: P) {
   return (
     <svg viewBox="0 0 64 64" className={className} aria-hidden="true">

@@ -1,6 +1,6 @@
-import { Apple, Croissant, HeartHandshake, MessageCircleHeart, Salad, Soup, Sprout, Puzzle } from "lucide-react";
+import { Apple, Croissant, HeartHandshake, Music, Salad, Soup, Sprout, Puzzle } from "lucide-react";
 import type { ComponentType } from "react";
-import { AbcIcon, BeltIcon } from "./BrandIcons";
+import { BeltIcon } from "./BrandIcons";
 
 export type Tone = "mint" | "lilac" | "peach";
 type Icon = ComponentType<{ className?: string }>;
@@ -21,9 +21,8 @@ export const pillars: { Icon: Icon; tone: Tone }[] = [
 export const groupTones: Tone[] = ["lilac", "peach"];
 
 export const clubs = [
-  { key: "speech", Icon: MessageCircleHeart as Icon, tone: "lilac" },
+  { key: "dance", Icon: Music as Icon, tone: "lilac" },
   { key: "taekwondo", Icon: BeltIcon as Icon, tone: "peach" },
-  { key: "english", Icon: AbcIcon as Icon, tone: "mint" },
 ] as const satisfies readonly { key: string; Icon: Icon; tone: Tone }[];
 
 export const meals = [
